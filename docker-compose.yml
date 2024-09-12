@@ -1,0 +1,37 @@
+#? docker-compose.yml is used to manage multiple containers at same time 
+version: '3.8'
+services:
+  api:
+    container_name: api-container
+    restart: always
+    build: ./backend
+    ports:
+      - "5001:5000"
+    depends_on:
+      - mongo
+  client:
+    container_name: client-container
+    restart: always
+    build: ./frontend
+    ports:
+      - "3001:3000"
+    depends_on:
+      - api
+  mongo:
+    container_name: mongo-backend
+    image: mongo
+    expose:
+      - "27017"
+    ports:
+      - "27017:27017"
+    volumes:
+      - apiDB:/data/db
+volumes:
+  apiDB:  # Corrected the mapping syntax by adding a colon
+
+
+# docker build  
+# docker compose   
+# docker-compose -d up mongo           -- first we start mongo
+# docker-compose up -d api           -- second we start 
+# docker-compose up -d client           -- third we start 
